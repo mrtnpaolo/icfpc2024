@@ -17,11 +17,14 @@ main =
      go
   where
     go =
-      do putStr "> "
-         hFlush stdout
+      do hPutStr stderr "> "
+         hFlush stderr
          inp <- hGetLine stdin
          resp <- r (enc inp)
-         putStrLn (dec resp)
+         putStr (dec resp)
+         hFlush stdout
+         hPutStr stderr "\n"
+         hFlush stderr
          go
 
 -- encoding / decoding strings
