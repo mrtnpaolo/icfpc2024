@@ -29,3 +29,15 @@ it will respond with `<some text>`.
 
 Hint: you can use this to validate the Macroware Insight evaluator has the expected behavior. Of course the usual limitations still apply.
 ````
+
+```
+> get scoreboard
+| # | team | hello | lambdaman | spaceship | 3d | efficiency |
+[…]
+```
+
+```
+> get scoreboard hello
+| # | team | hello1 | hello2 | hello3 | hello4 |
+[…]
+```
