@@ -1,0 +1,41 @@
+cabal-version:      3.0
+name:               a
+version:            0.1.0.0
+-- synopsis:
+-- description:
+license:            MIT
+license-file:       LICENSE
+-- author:
+-- maintainer:
+-- copyright:
+build-type:         Simple
+extra-doc-files:    CHANGELOG.md
+-- extra-source-files:
+
+common warnings
+    ghc-options: -Wall -Wno-missing-signatures -Wno-type-defaults -Wno-name-shadowing
+
+common extensions
+    default-extensions: PartialTypeSignatures
+                        ImportQualifiedPost
+                        TypeApplications
+                        PatternSynonyms
+                        ViewPatterns
+                        BlockArguments
+                        LambdaCase
+                        RecordWildCards
+                        ParallelListComp
+                        OverloadedStrings
+                        TemplateHaskell
+
+executable com
+    import:           warnings
+    import:           extensions
+    main-is:          Main.hs
+    build-depends:    base ^>=4.19.0.0
+                    , random
+                    , req
+                    , bytestring
+                    , file-embed
+    hs-source-dirs:   .
+    default-language: GHC2021
