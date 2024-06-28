@@ -43,7 +43,7 @@ executable com
                     , req
                     , bytestring
                     , file-embed
-    hs-source-dirs:   .
+    hs-source-dirs:  com
     default-language: GHC2021
 
 library icfplang
