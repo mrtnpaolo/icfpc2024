@@ -57,3 +57,12 @@ library icfplang
     build-depends:      base
     hs-source-dirs:     icfplang
     default-language:   GHC2021
+
+executable eval
+    import:           warnings
+    import:           extensions
+    main-is:          Main.hs
+    build-depends:    base ^>=4.19.0.0
+                    , icfplang
+    hs-source-dirs:   eval
+    default-language: GHC2021
