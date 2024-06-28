@@ -51,3 +51,12 @@ Self-check OK, send `solve language_test 4w3s0m3` to claim points for it
 > solve language_test 4w3s0m3
 Correct, you solved hello4!
 ```
+
+```
+> echo hello
+hello
+
+You scored some points for using the echo service!
+
+[this is hello3, got all hello1-4 this way]
+```
