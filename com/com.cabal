@@ -13,7 +13,11 @@ extra-doc-files:    CHANGELOG.md
 -- extra-source-files:
 
 common warnings
-    ghc-options: -Wall -Wno-missing-signatures -Wno-type-defaults -Wno-name-shadowing
+    ghc-options: -Wall
+                 -Wno-missing-signatures
+                 -Wno-type-defaults
+                 -Wno-name-shadowing
+                 -Wno-incomplete-uni-patterns
 
 common extensions
     default-extensions: PartialTypeSignatures
@@ -39,3 +43,11 @@ executable com
                     , file-embed
     hs-source-dirs:   .
     default-language: GHC2021
+
+library icfplang
+    import:             warnings
+    import:             extensions
+    exposed-modules:    ICFP.Lang
+    build-depends:      base
+    hs-source-dirs:     icfplang
+    default-language:   GHC2021
