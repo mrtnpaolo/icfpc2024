@@ -41,3 +41,13 @@ Hint: you can use this to validate the Macroware Insight evaluator has the expec
 | # | team | hello1 | hello2 | hello3 | hello4 |
 […]
 ```
+
+```
+> cabal run eval -- language_test.txt
+[…]
+Self-check OK, send `solve language_test 4w3s0m3` to claim points for it
+
+> cabal run com
+> solve language_test 4w3s0m3
+Correct, you solved hello4!
+```

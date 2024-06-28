@@ -31,7 +31,7 @@ token "F" = TF
 
 token ('I':xs) = TI (readBase94 xs)
 
-token ('S':xs) = TStr (decode94 xs)
+token ('S':xs) = TStr xs
 
 token ("U-") = TNeg
 token ("U!") = TNot
@@ -53,17 +53,13 @@ token ("B.") = TSconcat
 token ("BT") = TTakeN
 token ("BD") = TDropN
 token ("B$") = TApply
-token ('B':x) = error (unwords ["unrecotnized binary op",x])
+token ('B':x) = error (unwords ["unrecognized binary op",x])
 
 token ("?") = TIf
 token ('?':x) = error (unwords ["spurious chars in if",x])
 
-token ('L':xs) = TLam n
-  where
-    TI n = token ('I':xs)
+token ('L':xs) = TLam (readBase94 xs)
 
-token ('v':xs) = TVar n
-  where
-    TI n = token ('I':xs)
+token ('v':xs) = TVar (readBase94 xs)
 
 token x = error (unwords ["unrecognized token",x])

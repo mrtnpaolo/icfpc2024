@@ -15,11 +15,12 @@ main =
 f inp =
  do putStrLn inp
     let ts = tokenize inp
-    print ts
+    -- print ts
     let (ps,_) = parse ts
     print ps
-    let e = val (eval ps)
-    putStrLn e
+    putStrLn $ case (eval emptyEnv ps) of
+      VS s -> decode94 s
+      x -> val x
 
 getInput =
   do args <- getArgs

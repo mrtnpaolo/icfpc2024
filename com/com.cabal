@@ -55,6 +55,7 @@ library icfplang
                       , ICFP.AST
                       , ICFP.Eval
     build-depends:      base
+                      , containers
     hs-source-dirs:     icfplang
     default-language:   GHC2021
 
