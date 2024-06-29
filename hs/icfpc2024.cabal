@@ -67,3 +67,23 @@ executable eval
                     , icfplang
     hs-source-dirs:   eval
     default-language: GHC2021
+
+library utils
+    import:             warnings
+    import:             extensions
+    ghc-options:        -Wno-x-partial
+    exposed-modules:    Utils
+                      , Utils.Coord
+                      , Utils.Input
+                      , Utils.Search
+                      , Utils.Chinese
+                      , Utils.List
+                      , Utils.Memo
+    other-modules:      Utils.Deque
+                      , Utils.PQueue
+    build-depends:      base
+                      , array
+                      , containers
+                      , MemoTrie
+    hs-source-dirs:     utils
+    default-language:   GHC2021
