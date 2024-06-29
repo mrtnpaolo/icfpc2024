@@ -1,0 +1,2 @@
+> solve lambdaman2 RDURRDDRRUUDDLLLDLLDDRRRUR
+Correct, you solved lambdaman2 with a score of 44!

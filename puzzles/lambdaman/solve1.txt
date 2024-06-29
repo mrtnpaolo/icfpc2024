@@ -1,0 +1,2 @@
+> solve lambdaman1 UDLLLDURRRRRURR
+Correct, you solved lambdaman1 with a score of 33!

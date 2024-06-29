@@ -39,7 +39,17 @@ solve a start = [ reverse path | (_,a,path) <- visits, swooped a ]
       | ('.'==) `any` (A.elems a) = nexts
       | otherwise = []
       where
+{-
         nexts =
           [ (d,visit a d,dir:p)
           | (dir,d) <- zip "URDL" (cardinal c), inside d, (a A.! d) `elem` (". " :: String) ]
+-}
+        nexts =
+          [ (d,visit a d,dir:p)
+          | let xs0 = zip "URDL" (cardinal c)
+          , let xs1 = filter (\(_,d) -> inside d) xs0
+          , let xs2 | ys <- filter (\(_,d) -> '.' == a A.! d) xs1, not (null ys) = ys
+                    | otherwise = filter (\(_,d) -> ' ' == a A.! d) xs1
+          , (dir,d) <- xs2 ]
+
     inside = inRange (A.bounds a)
