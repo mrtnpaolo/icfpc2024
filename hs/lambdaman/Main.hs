@@ -3,6 +3,8 @@ module Main (main) where
 import Utils
 
 import Data.Ix
+import Data.Ord
+import Data.List
 import Data.Array.Unboxed qualified as A
 import Data.Map.Strict    qualified as M
 
@@ -28,12 +30,15 @@ astarOn rep nexts start = astarOnN rep nexts [start]
 
 bfsOn :: Ord r => (a -> r) -> (a -> [a]) -> [a] -> [a]
 bfsOn repr next starts = loop S.empty (D.fromList starts)
+
+dfsOn :: Ord r => (a -> r) -> (a -> [a]) -> a -> [a]
+dfsOn repr next start = loop S.empty [start]
 -}
 
 solve a start = [ reverse path | (_,a,path) <- visits, swooped a ]
   where
     swooped = null . filter ('.'==) . A.elems
-    visits = bfsOn repr next [(start,visit a start,[])]
+    visits = dfsOn repr next (start,visit a start,[])
     repr (c,a,_) = (c,a)
     next (c,a,p)
       | ('.'==) `any` (A.elems a) = nexts
