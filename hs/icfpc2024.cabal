@@ -87,3 +87,14 @@ library utils
                       , MemoTrie
     hs-source-dirs:     utils
     default-language:   GHC2021
+
+executable lambdaman
+    import:           warnings
+    import:           extensions
+    main-is:          Main.hs
+    build-depends:    base ^>=4.19.0.0
+                    , utils
+                    , array
+                    , containers
+    hs-source-dirs:   lambdaman
+    default-language: GHC2021
