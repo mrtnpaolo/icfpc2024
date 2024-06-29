@@ -1,3 +1,4 @@
 .teamtoken
 **/dist-newstyle
 **/*.swp
+**/.DS_Store
