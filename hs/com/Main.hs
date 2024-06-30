@@ -7,12 +7,27 @@ import Data.String
 import Data.ByteString.Char8 qualified as B
 import Control.Applicative
 import System.IO
+import System.Environment
 import Data.FileEmbed (embedStringFile)
 
 import Network.HTTP.Req
 
 main :: IO ()
 main =
+  do args <- getArgs
+     case args of
+       [] -> repl
+       ["-"] -> enc
+       ["-r"] -> raw
+       _ -> help
+
+help = putStr $ unlines
+  [ "ran with no options runs a repl"
+  , "options:"
+  , "\t-\tgobble all stdin, encode it, send and decode the response"
+  , "\t-r\tgobble all stdin and send it raw, decode the response" ]
+
+repl =
   do hSetBuffering stdin LineBuffering
      go
   where
@@ -20,26 +35,38 @@ main =
       do hPutStr stderr "> "
          hFlush stderr
          inp <- hGetLine stdin
-         resp <- r (enc inp)
-         putStr (dec resp)
+         resp <- r (encode inp)
+         putStr (decode resp)
          hFlush stdout
          hPutStr stderr "\n"
          hFlush stderr
          go
 
+enc =
+  do inp <- hGetContents stdin
+     resp <- r (encode inp)
+     putStr (decode resp)
+     hFlush stdout
+
+raw =
+  do inp <- hGetContents stdin
+     resp <- r inp
+     putStr (decode resp)
+     hFlush stdout
+
 -- encoding / decoding strings
 
 t = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!\"#$%&'()*+,-./:;<=>?@[\\]^_`|~ \n"
 
-enc = ('S':) . mapMaybe f
+encode = ('S':) . mapMaybe f
   where
     f c = fmap (chr . (33+)) (findIndex (c==) t) <|> Just c
 
-dec ('S':xs) = (f . ord) `map` xs
+decode ('S':xs) = (f . ord) `map` xs
   where
     f n | n < 33 || n > 126 = chr n
         | otherwise = t !! (n - 33)
-dec ys = ys
+decode ys = ys
 
 -- http requests
 
