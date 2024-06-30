@@ -98,3 +98,13 @@ executable lambdaman
                     , containers
     hs-source-dirs:   lambdaman
     default-language: GHC2021
+
+executable ic
+    import:           warnings
+    import:           extensions
+    main-is:          Main.hs
+    build-depends:    base ^>=4.19.0.0
+                    , template-haskell
+                    , icfplang
+    hs-source-dirs:   ic
+    default-language: GHC2021
