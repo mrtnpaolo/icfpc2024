@@ -1,6 +1,9 @@
 module ICFP.AST where
 
+import ICFP.Base94
 import ICFP.Tokens
+
+import Data.Monoid
 
 data Val = VB Bool | VI Int | VS String | VF (Val -> Val)
 
@@ -101,3 +104,43 @@ parse x = error (unwords ["cannot parse",show x])
 bin k r = (k e1 e2,r2) where (e1,r1) = parse r; (e2,r2) = parse r1
 
 ter k r = (k e1 e2 e3,r3) where (e1,r1) = parse r; (e2,r2) = parse r1; (e3,r3) = parse r2
+
+-- serialize to text
+
+serialize :: Expr Val -> String
+serialize e = unwords (go e `appEndo` [])
+  where
+    go :: Expr Val -> Endo [String]
+
+    go (T) = Endo ("T":)
+    go (F) = Endo ("F":)
+    go (I n) = Endo (('I':encode94 (show n)):)
+    go (Str xs) = Endo (('S':encode94 xs):)
+
+    go (Neg e) = Endo ("U-":) <> go e
+    go (Not e) = Endo ("U!":) <> go e
+
+    go (StoI e) = Endo ("U#":) <> go e
+    go (ItoS e) = Endo ("U$":) <> go e
+
+    go (Add e1 e2) = Endo ("B+":) <> go e1 <> go e2
+    go (Sub e1 e2) = Endo ("B-":) <> go e1 <> go e2
+    go (Mul e1 e2) = Endo ("B*":) <> go e1 <> go e2
+    go (Div e1 e2) = Endo ("B/":) <> go e1 <> go e2
+    go (Mod e1 e2) = Endo ("B%":) <> go e1 <> go e2
+
+    go (Lt  e1 e2) = Endo ("B<":) <> go e1 <> go e2
+    go (Gt  e1 e2) = Endo ("B>":) <> go e1 <> go e2
+    go (Equ e1 e2) = Endo ("B=":) <> go e1 <> go e2
+
+    go (Sconcat e1 e2) = Endo ("B.":) <> go e1 <> go e2
+
+    go (TakeN e1 e2) = Endo ("BT":) <> go e1 <> go e2
+    go (DropN e1 e2) = Endo ("BD":) <> go e1 <> go e2
+
+    go (App e1 e2) = Endo ("B$":) <> go e1 <> go e2
+
+    go (If e1 e2 e3) = Endo ("?":) <> go e1 <> go e2 <> go e3
+
+    go (Lam n e) = Endo (('L':encode94 (show n)):) <> go e
+    go (Var n) = Endo (('v':encode94 (show n)):)
