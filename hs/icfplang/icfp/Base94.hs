@@ -14,12 +14,8 @@ showBase94 n = showIntAtBase 94 (chr . (33+)) n ""
 
 encode94 = map f
   where
-    f c@(ord -> n)
-      | n < 33 || n > 126 = chr n
-      | otherwise = chr (33 + i)
-      where
-        Just i = findIndex (c==) alphabet
-        alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!\"#$%&'()*+,-./:;<=>?@[\\]^_`|~ \n"
+    f c = chr (33 + i) where Just i = findIndex (c==) alphabet
+    alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!\"#$%&'()*+,-./:;<=>?@[\\]^_`|~ \n"
 
 decode94 = map (f . ord)
   where
