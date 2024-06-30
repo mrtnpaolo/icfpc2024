@@ -17,7 +17,7 @@ data Token
   | TAdd | TSub | TMul | TDiv | TMod | TLt | TGt | TEqu | TOr | TAnd | TSconcat | TTakeN | TDropN
 
   -- lambdas
-  | TApply | TIf | TLam Int | TVar Int
+  | TApp | TIf | TLam Int | TVar Int
 
   deriving (Show)
 
@@ -52,7 +52,7 @@ token ("B&") = TAnd
 token ("B.") = TSconcat
 token ("BT") = TTakeN
 token ("BD") = TDropN
-token ("B$") = TApply
+token ("B$") = TApp
 token ('B':x) = error (unwords ["unrecognized binary op",x])
 
 token ("?") = TIf

@@ -48,7 +48,7 @@ eval env (Sconcat e1 e2) = VS $ (++) (valS (eval env e1)) (valS (eval env e2))
 eval env (TakeN e1 e2) = VS $ take (valI (eval env e1)) (valS (eval env e2))
 eval env (DropN e1 e2) = VS $ drop (valI (eval env e1)) (valS (eval env e2))
 
-eval env (Apply e1 e2) = ($) (valF $ eval env e1) (eval env e2)
+eval env (App e1 e2) = ($) (valF $ eval env e1) (eval env e2)
 
 eval env (If e1 e2 e3) | v1 = eval env e2 | otherwise = eval env e3 where VB v1 = eval env e1
 

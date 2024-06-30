@@ -49,7 +49,7 @@ data Expr a where
   TakeN :: Expr Val -> Expr Val -> Expr Val
   DropN :: Expr Val -> Expr Val -> Expr Val
 
-  Apply :: Expr Val -> Expr Val -> Expr Val
+  App :: Expr Val -> Expr Val -> Expr Val
   If :: Expr Val -> Expr Val -> Expr Val -> Expr Val
   Lam :: Int -> Expr Val -> Expr Val
   Var :: Int -> Expr Val
@@ -88,7 +88,7 @@ parse (TSconcat : r) = bin Sconcat r
 parse (TTakeN : r) = bin TakeN r
 parse (TDropN : r) = bin DropN r
 
-parse (TApply : r) = bin Apply r
+parse (TApp : r) = bin App r
 
 parse (TIf : r) = ter If r
 
