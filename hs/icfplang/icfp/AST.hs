@@ -5,7 +5,7 @@ import ICFP.Tokens
 
 import Data.Monoid
 
-data Val = VB Bool | VI Int | VS String | VF (Val -> Val)
+data Val = VB Bool | VI Integer | VS String | VF (Val -> Val)
 
 instance Show Val where
   show = val
@@ -23,7 +23,7 @@ val (VF _) = "<function>"
 data Expr a where
   T :: Expr Val
   F :: Expr Val
-  I :: Int -> Expr Val
+  I :: Integer -> Expr Val
   Str :: String -> Expr Val
 
   -- unary ops
@@ -114,7 +114,7 @@ serialize e = unwords (go e `appEndo` [])
 
     go (T) = Endo ("T":)
     go (F) = Endo ("F":)
-    go (I n) = Endo (('I':encode94 (show n)):)
+    go (I n) = Endo (('I':showBase94 n):)
     go (Str xs) = Endo (('S':encode94 xs):)
 
     go (Neg e) = Endo ("U-":) <> go e

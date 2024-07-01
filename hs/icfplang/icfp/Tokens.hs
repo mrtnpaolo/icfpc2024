@@ -7,7 +7,7 @@ data Token
   -- data
   = TT
   | TF
-  | TI Int
+  | TI Integer
   | TStr String
 
   -- unary ops

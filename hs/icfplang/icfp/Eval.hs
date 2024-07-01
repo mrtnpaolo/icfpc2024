@@ -45,8 +45,8 @@ eval env (And e1 e2) = VB $ (&&) (valB (eval env e1)) (valB (eval env e2))
 
 eval env (Sconcat e1 e2) = VS $ (++) (valS (eval env e1)) (valS (eval env e2))
 
-eval env (TakeN e1 e2) = VS $ take (valI (eval env e1)) (valS (eval env e2))
-eval env (DropN e1 e2) = VS $ drop (valI (eval env e1)) (valS (eval env e2))
+eval env (TakeN e1 e2) = VS $ take (fromInteger $ valI (eval env e1)) (valS (eval env e2))
+eval env (DropN e1 e2) = VS $ drop (fromInteger $ valI (eval env e1)) (valS (eval env e2))
 
 eval env (App e1 e2) = ($) (valF $ eval env e1) (eval env e2)
 
