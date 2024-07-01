@@ -48,4 +48,14 @@ i = [| \x -> x |]
 
 e :: Q Exp
 -- e = [| "echo " ++ (itos 379390335319035451457) |]
-e = [| "echo " ++ (drop (stoi "g") (itos 379390335319035451457)) |]
+-- e = [| "echo " ++ (drop (stoi "g") (itos 379390335319035451457)) |]
+
+-- f = [| \f -> \n -> if (E.==) n 0 then 1 else (E.*) n (f ((E.-) n 1)) |] :: Q Exp
+-- e = [| $y $f 10 |]
+
+rep = [| \s -> \f -> \n -> if n == 1 then s else (++) s (f (n - 1)) |] :: Q Exp
+two = [| ($y ($rep "R") 49) ++ "D" ++ ($y ($rep "L") 49) ++ "D" |]
+--e = [| "solve lambdaman9 " ++ $y ($rep $two) 25 |]
+
+l8 = [| ($y ($rep "R") 100) ++ ($y ($rep "D") 100) ++ ($y ($rep "L") 100) ++ ($y ($rep "U") 100) |]
+e = [| "solve lambdaman9 " ++ $y ($rep $l8) 100 |]

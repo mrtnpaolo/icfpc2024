@@ -5,7 +5,7 @@ import Language.Haskell.TH
 
 import ICFP
 
-import E
+import E qualified as E
 
 main =
  do e <- runQ x
@@ -30,13 +30,13 @@ x :: Q Exp
 --x = [| (\f -> (\x -> f (x x)) (\x -> f (x x))) (\f -> (\n -> if (==) n 0 then 1 else (*) n (f ((-) n 1)))) 10 |]
 
 -- λf.(λx.f(xx))(λx.f(xx))
--- y = [| (\f -> (\x -> f (x x)) (\x -> f (x x))) |]
+y = [| (\f -> (\x -> f (x x)) (\x -> f (x x))) |] :: Q Exp
 
 -- factorial
--- f = [| \f -> \n -> if (==) n 0 then 1 else (*) n (f ((-) n 1)) |]
--- x = [| $y $f 10 |]
+-- f = [| \f -> \n -> if (E.==) n 0 then 1 else (E.*) n (f ((E.-) n 1)) |] :: Q Exp
+-- x = [| $E.y $f 10 |]
 
-x = [| $e |]
+x = [| $E.e |]
 
 exp2ast :: Exp -> Expr Val
 exp2ast = go
